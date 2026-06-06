@@ -1,0 +1,8 @@
+# OS / editor cruft (per-app deps & build output are ignored in backend/ and frontend/)
+.DS_Store
+*.swp
+
+# Root-level env files (never commit secrets)
+.env
+.env.*
+!.env.example
