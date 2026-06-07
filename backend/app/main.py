@@ -26,8 +26,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Subscription Tracker API",
-    description="Backend API for tracking subscriptions and generating insights",
+    title="Household Management API",
+    description="Backend API for the Household Management app",
     version="0.1.0",
     lifespan=lifespan,
 )
@@ -58,7 +58,7 @@ app.include_router(auth_router)
 @app.get("/")
 async def root():
     return {
-        "message": "Welcome to the Subscription Tracker API",
+        "message": "Welcome to the Household Management API",
         "docs_url": "/docs",
         "status": "healthy",
     }
