@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     # docker-compose) is rewritten to ``postgresql+psycopg://`` so the same value
     # works for the async engine.
     database_url: str = (
-        "postgresql+psycopg://postgres:password@localhost:5432/subscription_tracker"
+        "postgresql+psycopg://postgres:password@localhost:5432/household"
     )
 
     # OIDC / Authentik. Empty defaults keep the app importable in CI/dev before an

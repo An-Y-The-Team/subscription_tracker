@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: subscription_tracker
+      POSTGRES_DB: household
     ports:
       - "5432:5432"
     volumes:
@@ -24,7 +24,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/subscription_tracker
+      - DATABASE_URL=postgresql://postgres:password@db:5432/household
     depends_on:
       - db
 

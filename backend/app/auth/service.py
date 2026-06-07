@@ -110,5 +110,12 @@ async def revoke_session(
 
 async def delete_expired_sessions(session: AsyncSession) -> None:
     """Sweep expired sessions. Safe to call on startup."""
-    await session.exec(delete(UserSession).where(UserSession.expires_at <= _utcnow()))
+    # synchronize_session=False: do the comparison in SQL (bulk delete), not in Python
+    # against in-session objects.
+    statement = (
+        delete(UserSession)
+        .where(UserSession.expires_at <= _utcnow())
+        .execution_options(synchronize_session=False)
+    )
+    await session.exec(statement)
     await session.commit()
