@@ -72,7 +72,7 @@ await batchProcess(items, async (item) => {
 
 ### API Client
 
-Use `api.[method]` from `@/lib/api` instead of native `fetch()`. Set up with `ApiProvider` and `initializeApi()` for automatic Sentry instrumentation, error handling, and request tracing.
+Use `api.[method]` from `@/shared/api` instead of native `fetch()`. Set up with `ApiProvider` and `initializeApi()` for automatic Sentry instrumentation, error handling, and request tracing.
 
 ### Avoid return await
 
