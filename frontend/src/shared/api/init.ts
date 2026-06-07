@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "./client";
-import { addSentryTracking, addDevLogging } from "./plugins";
+import { addDevLogging, addSentryTracking } from "./plugins";
 
 let initialized = false;
 

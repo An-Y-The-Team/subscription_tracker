@@ -5,9 +5,7 @@ import {
   SORT_ORDER,
   type SortOrder,
 } from "../../constants/filters";
-import {
-  OBJECT_ID_REGEX,
-} from "../../constants/validation";
+import { OBJECT_ID_REGEX } from "../../constants/validation";
 import { isArray, isNumber } from "../is/is";
 
 const MIN_PAGE = 1;

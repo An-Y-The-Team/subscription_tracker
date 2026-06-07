@@ -2,6 +2,7 @@
  * Lightweight API wrapper for consistent error handling and optional instrumentation
  * This provides a clean abstraction over fetch without requiring Sentry dependencies
  */
+import { API_URL } from "@/config/env";
 
 export interface ApiError extends Error {
   status: number;
@@ -12,6 +13,8 @@ export interface ApiConfig {
   baseURL?: string;
   headers?: Record<string, string>;
   timeout?: number;
+  /** Credentials mode for every request. Defaults to "include" so the BFF session cookie is sent cross-origin. */
+  credentials?: RequestCredentials;
 }
 
 /** Extended options for API methods that support per-request timeout */
@@ -28,6 +31,7 @@ class ApiClient {
       baseURL: "",
       headers: {},
       timeout: 30000,
+      credentials: "include",
       ...config,
     };
   }
@@ -62,6 +66,7 @@ class ApiClient {
 
     try {
       const response = await fetch(fullURL, {
+        credentials: this.config.credentials,
         ...fetchOptions,
         headers: {
           ...this.config.headers,
@@ -197,8 +202,10 @@ class ApiClient {
   }
 }
 
-// Export a default instance
-export const api = new ApiClient();
+// Export a default instance pointed at the backend, sending the session cookie.
+// baseURL is read at module load (NEXT_PUBLIC_* is build-time inlined), so the very
+// first request — e.g. /auth/me — already targets the backend with no init race.
+export const api = new ApiClient({ baseURL: API_URL, credentials: "include" });
 
 // Export the class for custom instances
 export { ApiClient };

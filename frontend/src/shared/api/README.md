@@ -26,8 +26,9 @@ await api.delete("/api/stories/123");
 ### With React Query
 
 ```typescript
+import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { api } from "@/shared/api";
-import { useQuery, useMutation } from "@tanstack/react-query";
 
 // Query
 const { data, isLoading } = useQuery({

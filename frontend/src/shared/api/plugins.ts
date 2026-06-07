@@ -2,7 +2,6 @@
  * Plugin system for the API client to add optional instrumentation
  * This keeps monitoring concerns separate from the core API functionality
  */
-
 import type { ApiClient, ApiError } from "./client";
 
 interface SentrySpanOptions {
@@ -43,7 +42,7 @@ export function addSentryTracking(apiClient: ApiClient): ApiClient {
   // Override fetch with instrumented version
   apiClient.fetch = async function (url: string, options: RequestInit = {}) {
     const method = options.method || "GET";
-    
+
     return window.Sentry!.startSpan(
       {
         op: "http.client",
@@ -61,7 +60,7 @@ export function addSentryTracking(apiClient: ApiClient): ApiClient {
           // Add additional context for errors
           if (error instanceof Error && "status" in error) {
             const apiError = error as ApiError;
-            
+
             // Only capture 5xx errors as exceptions
             if (apiError.status >= 500) {
               window.Sentry!.captureException(error, {
@@ -94,7 +93,7 @@ export function addSentryTracking(apiClient: ApiClient): ApiClient {
               );
             }
           }
-          
+
           throw error;
         }
       }
@@ -115,7 +114,7 @@ export function addAuthHeaders(
 
   apiClient.fetch = async function (url: string, options: RequestInit = {}) {
     const authHeaders = await getHeaders();
-    
+
     return originalFetch(url, {
       ...options,
       headers: {
@@ -141,7 +140,7 @@ export function addDevLogging(apiClient: ApiClient): ApiClient {
   apiClient.fetch = async function (url: string, options: RequestInit = {}) {
     const method = options.method || "GET";
     console.log(`🔵 API Request: ${method} ${url}`);
-    
+
     try {
       const response = await originalFetch(url, options);
       console.log(`🟢 API Response: ${method} ${url} - ${response.status}`);
